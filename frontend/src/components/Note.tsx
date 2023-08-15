@@ -8,11 +8,12 @@ import {MdDelete} from "react-icons/md";
 
 type NoteProps = {
     note: NoteModel,
+    onNoteClicked: (note: NoteModel) => void,
     onDeleteNoteClicked: (note:NoteModel) => void,
     className?: string
 }
 
-const Note = ({ note, className,  onDeleteNoteClicked }: NoteProps) => {
+const Note = ({ note, className, onNoteClicked, onDeleteNoteClicked }: NoteProps) => {
     const {
         title,
         text,
@@ -22,7 +23,9 @@ const Note = ({ note, className,  onDeleteNoteClicked }: NoteProps) => {
 
     return (
         <>
-            <Card className={`${styles.noteCard} ${className}`}>
+            <Card 
+                className={`${styles.noteCard} ${className}`}
+                onClick={()=> onNoteClicked(note)}>
                 <Card.Body className={styles.cardBody}>
                     <Card.Title className={styleUtils.flexCenter}>
                         {title}
