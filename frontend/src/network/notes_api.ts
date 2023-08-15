@@ -1,4 +1,5 @@
 import { Note } from "../models/note";
+import { User } from "../models/user";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const fetchData = async (input:RequestInfo, init?: RequestInit) => {
@@ -10,6 +11,54 @@ const fetchData = async (input:RequestInfo, init?: RequestInit) => {
         const errorMessage = errorBody.error;
         throw Error(errorMessage);
     }   
+}
+
+export const getLoggedInUser = async ():Promise<User> => {
+    const response = await fetchData("api/users", {method: "GET"});
+    return response.json();
+}
+
+export type SignUpCredentials = {
+    username: string,
+    email: string,
+    password: string,
+}
+
+export const signUp = async (credentials: SignUpCredentials):Promise<User> => {
+    const response = await fetchData("api/users/signup", 
+    {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(credentials),    
+    });
+   
+    return response.json();
+}
+
+export type LoginCredentials = {
+    username: string,
+    email: string,
+    password: string,
+}
+
+export const login = async (credentials: LoginCredentials):Promise<User> => {
+    const response = await fetchData("api/users/login", 
+    {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(credentials),    
+    });
+   
+    return response.json();
+}
+
+export const logout = async () => {
+    await fetchData("api/users/logout",{method: "POST"});
+
 }
 
 

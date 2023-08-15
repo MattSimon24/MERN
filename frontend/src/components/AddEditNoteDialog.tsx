@@ -1,8 +1,9 @@
-import { Button, Form, FormControl, FormGroup, FormLabel, Modal, ModalBody, ModalFooter, ModalTitle } from "react-bootstrap";
+import { Button, Form, Modal, ModalBody, ModalFooter, ModalTitle } from "react-bootstrap";
 import { Note } from "../models/note.ts";
 import { useForm } from "react-hook-form";
 import { NoteInput } from "../network/notes_api.ts";
 import * as NotesApi from "../network/notes_api.ts";
+import TextInputField from "./form/TextInputField.tsx";
 
 
 type AddEditNoteDialogProps = {
@@ -39,33 +40,31 @@ const AddEditNoteDialog = ({ onDismiss, onNoteSaved, noteToEdit }: AddEditNoteDi
         <Modal show onHide={onDismiss}>
             <Modal.Header closeButton>
                 <ModalTitle>
-                    {noteToEdit ? 'Update Note' : 'Add Note' }
+                    {noteToEdit ? 'Update Note' : 'Add Note'}
                 </ModalTitle>
             </Modal.Header>
 
             <ModalBody>
                 <Form id="addEditNoteForm" onSubmit={handleSubmit(onSubmit)}>
-                    <FormGroup className="mb-3">
-                        <FormLabel>Title</FormLabel>
-                        <FormControl
-                            type="text"
-                            placeholder="Title"
-                            isInvalid={!!errors.title}
-                            {...register('title', { required: "Required" })}
-                        />
-                        <FormControl.Feedback type="invalid">
-                            {errors.title?.message}
-                        </FormControl.Feedback>
-                    </FormGroup>
-                    <FormGroup>
-                        <FormLabel>Text</FormLabel>
-                        <FormControl
-                            as="textarea"
-                            rows={5}
-                            placeholder="Text"
-                            {...register('text')}
-                        />
-                    </FormGroup>
+                    <TextInputField
+                        name='title'
+                        label='Title'
+                        type='text'
+                        placeholder='Title'
+                        register={register}
+                        registerOptions={{ required: 'Required' }}
+                        error={errors.title}
+                    />
+                    <TextInputField
+                        name='text'
+                        label='Text'
+                        as='textarea'
+                        placeholder='Text'
+                        rows={5}
+                        register={register}
+
+                    />
+
                 </Form>
             </ModalBody>
             <ModalFooter>
