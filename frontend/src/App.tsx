@@ -46,7 +46,7 @@ function App() {
   }
 
   const notesGrid =
-    <Row xs={1} md={2} xl={3} className="g-4">
+    <Row xs={1} md={2} xl={3} className={`g-4 ${styleUtils.notesGrid}`}>
       {notes.map(note => (
         <Col key={note._id}>
           <Note note={note} className={styles.note} onNoteClicked={() => setNoteToEdit(note)} onDeleteNoteClicked={deleteNote} />
@@ -59,10 +59,10 @@ function App() {
 
   return (
     <>
-      <Container>
+      <Container className={styleUtils.notesPage}>
         <Button className={`mb-4 ${styleUtils.blockCenter} ${styleUtils.flexCenter}`} onClick={() => setShowAddNoteDialog(true)} >
           <FaPlus />
-
+          Add new note
 
         </Button>
         {showNotesLoading && <Spinner animation='border' variant='primary' />}
