@@ -26,13 +26,13 @@ app.use(session({
     rolling: true,
     store: MongoStore.create(
         {
-           mongoUrl: env.MONGO_CONNECTION_STRING 
+           mongoUrl: env.MONGO_CONNECTION_STRING, 
         }
     ),
 }));
 
 app.use("/api/users", userRoutes);
-app.use("/api/notes",requiresAuth, notesRoutes);
+app.use("/api/notes", requiresAuth, notesRoutes);
 
 app.use((req, res, next) => {
     next(createHttpError(404, "Endpoint not found"));

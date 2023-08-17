@@ -66,7 +66,7 @@ export const login: RequestHandler<unknown, unknown, LoginBody, unknown> = async
     try {
         if (!username || !password) throw createHttpError(400, 'Paramenter missing');
 
-        const user = await UserModel.findOne({ username: username }).select("+password + email").exec();
+        const user = await UserModel.findOne({ username: username }).select("+password +email").exec();
         if (!user) throw createHttpError(401, "Invalid credentials");
 
         const passwordMatch = await bcrypt.compare(password, user.password);
